@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- ========================= -->
+  <!--     🔥 SEO META TAGS     -->
+  <!-- ========================= -->
+
+  <title>배당 재투자 계산기 | DRIP Calculator | 배당컴</title>
+
+  <meta name="description" content="배당 재투자 계산기(DRIP Calculator). 배당 성장률, 배당 수익률, 주가 상승률, 월 추가 투자 등을 기반으로 배당 투자 시 미래 수익을 시뮬레이션합니다. 한국어 지원.">
+  <meta name="keywords" content="배당 재투자 계산기, 배당금 계산기, 배당 시뮬레이터, DRIP Calculator, dividend calculator, 배당 투자, 배당 성장주, 주식 수익 계산, 배당 금융, 복리 투자">
+  <meta name="robots" content="index, follow">
+
+  <!-- SNS / 카카오톡 / 인스타 / 페북 미리보기 -->
+  <meta property="og:title" content="배당컴 — 배당 재투자 계산기 (DRIP Calculator)">
+  <meta property="og:description" content="배당 수익률·배당 성장률·주가 상승률·세금·재투자 옵션을 포함한 배당 투자 계산기. 자동 계산 및 그래프 제공.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-domain.com/">
+  <meta property="og:image" content="https://your-domain.com/og-image.png">
+
+  <!-- 트위터 미리보기 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="배당 재투자 계산기 | DRIP Calculator">
+  <meta name="twitter:description" content="배당 투자 시뮬레이터 — 배당 재투자, 배당 성장률, 주가 성장률 포함.">
+  <meta name="twitter:image" content="https://your-domain.com/og-image.png">
+
+  <!-- 파비콘(선택) -->
+  <!-- <link rel="icon" href="favicon.ico" /> -->
+
+  <!-- ========================= -->
+  <!--    Schema.org 구조화 데이터  -->
+  <!-- ========================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "WebApplication",
+    "name": "배당 재투자 계산기 (배당컴)",
+    "url": "https://your-domain.com/",
+    "applicationCategory": "FinanceCalculator",
+    "operatingSystem": "All",
+    "description": "배당 재투자·배당성장률·주가상승률을 기반으로 미래 수익을 예측하는 배당 투자 계산기",
+    "inLanguage": "ko"
+  }
+  </script>
+
+  <!-- ========================= -->
+  <!--        기존 CSS           -->
+  <!-- ========================= -->
+  <style>
+    :root {
+      --bg: #0f172a; --card: #0b1220; --text: #e6eef6;
+      --accent: #06b6d4; --muted: #9aa4b2;
+      --glass: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1);
+    }
+    [data-theme="light"] {
+      --bg: #f6f7fb; --card:#ffffff; --text:#1a1a1a;
+      --accent:#0ea5e9; --muted:#6b7280;
+      --glass: rgba(0,0,0,0.05); --border: rgba(0,0,0,0.1);
+    }
+    body{margin:0;background:var(--bg);color:var(--text);padding:20px;font-family:Arial,sans-serif}
+    .wrap{max-width:1200px;margin:0 auto}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .logo{font-size:24px;font-weight:bold;color:var(--accent)}
+    #themeToggle{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--glass);cursor:pointer;color:var(--text)}
+    .grid{display:grid;grid-template-columns:1fr 450px;gap:18px}
+    .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border)}
+    label{font-size:13px;color:var(--muted)}
+    input,select{width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text)}
+    .btn{padding:10px 15px;border-radius:8px;background:var(--accent);border:none;font-weight:bold;color:#fff;cursor:pointer}
+    table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+    th,td{padding:8px;border-bottom:1px solid var(--border);text-align:right}
+    th{text-align:left;color:var(--muted)}
+    .footer{text-align:center;margin-top:40px;font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="logo">배당컴</div>
+  <button id="themeToggle">🌙 다크 모드</button>
+</header>
+
+<div class="grid">
+  <div class="card" id="inputsCard">
+    <h2>배당 재투자 계산기</h2>
+
+    <label>초기 투자금</label>
+    <input id="initial" type="text" value="1,000,000" />
+
+    <label>통화</label>
+    <select id="currency">
+      <option value="KRW">KRW (₩)</option>
+      <option value="USD">USD ($)</option>
+      <option value="EUR">EUR (€)</option>
+      <option value="GBP">GBP (£)</option>
+      <option value="JPY">JPY (¥)</option>
+    </select>
+
+    <label>초기 주가</label>
+    <input id="initPrice" type="text" value="50" />
+
+    <label>연 배당수익률 (%)</label>
+    <input id="divYield" type="number" value="3" />
+
+    <label>연 배당 성장률 (%)</label>
+    <input id="divGrowth" type="number" value="2" />
+
+    <label>연 주가 상승률 (%)</label>
+    <input id="priceGrowth" type="number" value="4" />
+
+    <label>월 추가 매수 금액</label>
+    <input id="monthlyAdd" type="text" value="0" />
+
+    <label>배당 지급 주기</label>
+    <select id="freq">
+      <option value="12">월별</option>
+      <option value="4">분기별</option>
+      <option value="1">연별</option>
+    </select>
+
+    <label>배당 재투자</label>
+    <select id="reinvest">
+      <option value="true">재투자</option>
+      <option value="false">미재투자</option>
+    </select>
+
+    <label>세율 (%)</label>
+    <input id="tax" type="number" value="15.4" />
+
+    <label>기간 (년)</label>
+    <input id="years" type="number" value="20" />
+
+    <div style="margin-top:15px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="calcBtn">계산하기</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="summary"></div>
+    <canvas id="valueChart" height="250"></canvas>
+    <div id="tableWrap" style="max-height:300px;overflow:auto"></div>
+  </div>
+</div>
+
+<div class="footer">© 2025 SeongHu — 배당컴 통합버전</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+// -------------------- 자동 쉼표 입력 --------------------
+const initialInput = document.getElementById("initial");
+initialInput.addEventListener("input", () => {
+  let v = initialInput.value.replace(/[^0-9]/g, "");
+  initialInput.value = v ? Number(v).toLocaleString("ko-KR") : "";
+});
+
+const initPriceInput = document.getElementById("initPrice");
+initPriceInput.addEventListener("input", () => {
+  let v = initPriceInput.value.replace(/[^0-9]/g, "");
+  initPriceInput.value = v ? Number(v).toLocaleString("ko-KR") : "";
+});
+
+const monthlyAddInput = document.getElementById("monthlyAdd");
+monthlyAddInput.addEventListener("input", () => {
+  let v = monthlyAddInput.value.replace(/[^0-9]/g, "");
+  monthlyAddInput.value = v ? Number(v).toLocaleString("ko-KR") : "";
+});
+
+/* -------------------- 테마 -------------------- */
+const themeToggle=document.getElementById('themeToggle');
+const savedTheme=localStorage.getItem('bc_theme')||'dark';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('bc_theme',t);
+  themeToggle.innerText = t === "light" ? "☀️ 라이트 모드" : "🌙 다크 모드";
+}
+applyTheme(savedTheme);
+themeToggle.onclick=()=>applyTheme(localStorage.getItem('bc_theme')==='dark'?'light':'dark');
+
+/* -------------------- 통화 포맷 -------------------- */
+function fmt(n){
+  const cur=document.getElementById('currency')?.value||'KRW';
+  const locale=cur==='KRW'?'ko-KR':cur==='USD'?'en-US':cur==='EUR'?'de-DE':cur==='GBP'?'en-GB':'ja-JP';
+  return new Intl.NumberFormat(locale,{style:'currency',currency:cur,maximumFractionDigits:0}).format(Number(n));}
+
+/* -------------------- 계산 기능 -------------------- */
+let chart = null;
+function runCalc(){
+  const P0 = Number(document.getElementById('initial').value.replace(/[^0-9]/g, ""));
+  const initP = Number(document.getElementById('initPrice').value.replace(/[^0-9]/g, ""));
+  const r = Number(document.getElementById('divYield').value)/100;
+  const g = Number(document.getElementById('divGrowth').value)/100;
+  const s = Number(document.getElementById('priceGrowth').value)/100;
+  const monthlyAdd = Number(document.getElementById('monthlyAdd').value.replace(/[^0-9]/g, ""));
+  const freq = Number(document.getElementById('freq').value);
+  const reinvest = document.getElementById('reinvest').value === 'true';
+  const tax = Number(document.getElementById('tax').value)/100;
+  const years = Number(document.getElementById('years').value);
+
+  let shares = P0 / initP;
+  let price = initP;
+  let totalDiv = 0;
+  let tableHTML = '<table><tr><th>연도</th><th>보유 주식 수</th><th>주가</th><th>배당금</th><th>평가금</th></tr>';
+
+  const labels = [];
+  const values = [];
+
+  for(let y=1; y<=years; y++){
+    for(let i=0;i<freq;i++){
+      const div = shares * price * (r/freq);
+      const taxed = div * (1-tax);
+      totalDiv += taxed;
+
+      if(reinvest){ shares += taxed / price; }
+
+      shares += (monthlyAdd * (12/freq)) / price;
+
+      price *= Math.pow(1+s, 1/freq);
+    }
+
+    labels.push(y+"년");
+    values.push(shares * price);
+
+    tableHTML += `<tr>
+      <td>${y}</td>
+      <td>${shares.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+      <td>${fmt(price)}</td>
+      <td>${fmt(totalDiv)}</td>
+      <td>${fmt(shares*price)}</td>
+    </tr>`;
+  }
+
+  tableHTML += '</table>';
+  document.getElementById('tableWrap').innerHTML = tableHTML;
+
+  document.getElementById('summary').innerHTML = `
+    <h3>최종 투자 결과</h3>
+    <p style="font-size:18px;font-weight:bold;color:var(--accent)">최종 평가금(배당 포함): <b>${fmt(shares*price + totalDiv)}</b></p>
+    <p>주식 평가금: <b>${fmt(shares*price)}</b></p>
+    <p>누적 세후 배당금: <b>${fmt(totalDiv)}</b></p>
+    <p>보유 주식 수: <b>${shares.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 주</b></p>
+  `;
+
+  if(chart) chart.destroy();
+  const ctx = document.getElementById('valueChart');
+  chart = new Chart(ctx,{
+    type:'line',
+    data:{labels:labels,datasets:[{label:'평가금',data:values,borderWidth:2}]},
+    options:{responsive:true,scales:{y:{beginAtZero:false}}}
+  });
+}
+
+document.getElementById('calcBtn').onclick = runCalc;
+</script>
+</body>
+</html>
